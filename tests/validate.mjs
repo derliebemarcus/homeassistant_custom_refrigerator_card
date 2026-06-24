@@ -9,7 +9,7 @@ const packageJson = JSON.parse(await readFile("package.json", "utf8"));
 assert.equal(distribution, source, "dist file must match the source build");
 assert.equal(manifest.name, "LG ThinQ Refrigerator Card");
 assert.equal(manifest.filename, "homeassistant_custom_refrigerator_card.js");
-assert.equal(packageJson.version, "0.1.0");
+assert.equal(packageJson.version, "0.1.1");
 assert.equal(packageJson.engines.node, ">=24");
 
 for (const expected of [
