@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.1] - 2026-06-24
+
+### Changed
+
+- Prepared the repository and release metadata for submission to the default HACS store.
+- Corrected the refrigerator card preview alternative text.
+
 ## [0.1.0] - 2026-06-24
 
 ### Added
