@@ -4,7 +4,7 @@ A standalone Home Assistant dashboard card for [LG ThinQ](https://www.home-assis
 
 
 <picture>
-  <img src="docs/images/card-preview.png" height="600" alt="Dishwasher card preview" />
+  <img src="docs/images/card-preview.png" height="600" alt="Refrigerator card preview" />
 </picture>
 
 ## Features
