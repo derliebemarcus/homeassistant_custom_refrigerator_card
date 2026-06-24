@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title description">
+  <title id="title">LG ThinQ Refrigerator Card preview</title>
+  <description id="description">A dark Home Assistant card showing refrigerator and freezer target temperatures and operating modes.</description>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="1" stop-color="#1f2937"/>
+    </linearGradient>
+    <linearGradient id="fridge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#223149"/>
+      <stop offset="1" stop-color="#152033"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="540" rx="32" fill="#0b1020"/>
+  <rect x="80" y="48" width="800" height="444" rx="28" fill="url(#bg)" stroke="#374151" stroke-width="2"/>
+  <text x="124" y="102" fill="#f9fafb" font-family="Arial, sans-serif" font-size="28" font-weight="700">Kühlschrank</text>
+  <text x="124" y="132" fill="#9ca3af" font-family="Arial, sans-serif" font-size="18">LG ThinQ</text>
+  <rect x="692" y="76" width="140" height="38" rx="19" fill="#163c2b"/>
+  <text x="714" y="101" fill="#86efac" font-family="Arial, sans-serif" font-size="16">Tür geschlossen</text>
+  <rect x="150" y="174" width="124" height="244" rx="24" fill="url(#fridge)" stroke="#4b5563"/>
+  <line x1="150" y1="322" x2="274" y2="322" stroke="#4b5563" stroke-width="3"/>
+  <rect x="251" y="205" width="5" height="74" rx="3" fill="#64748b"/>
+  <path d="M194 226l9-14 9 14-9 14zM176 254h54M203 237v34" stroke="#7dd3fc" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M181 367l10-6 10 6 10-6 10 6" stroke="#bae6fd" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <rect x="326" y="168" width="470" height="112" rx="18" fill="#182235" stroke="#374151"/>
+  <text x="358" y="204" fill="#7dd3fc" font-family="Arial, sans-serif" font-size="18">Kühlteil</text>
+  <text x="358" y="231" fill="#9ca3af" font-family="Arial, sans-serif" font-size="14">Solltemperatur</text>
+  <text x="690" y="223" fill="#f8fafc" font-family="Arial, sans-serif" font-size="34" font-weight="700">7 °C</text>
+  <line x1="358" y1="254" x2="752" y2="254" stroke="#4fc3f7" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="690" cy="254" r="10" fill="#4fc3f7"/>
+  <rect x="326" y="294" width="470" height="112" rx="18" fill="#182235" stroke="#374151"/>
+  <text x="358" y="330" fill="#bae6fd" font-family="Arial, sans-serif" font-size="18">Gefrierteil</text>
+  <text x="358" y="357" fill="#9ca3af" font-family="Arial, sans-serif" font-size="14">Solltemperatur</text>
+  <text x="664" y="349" fill="#f8fafc" font-family="Arial, sans-serif" font-size="34" font-weight="700">−15 °C</text>
+  <line x1="358" y1="380" x2="752" y2="380" stroke="#7dd3fc" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="724" cy="380" r="10" fill="#7dd3fc"/>
+  <rect x="326" y="426" width="140" height="42" rx="12" fill="#173c32"/>
+  <text x="350" y="453" fill="#86efac" font-family="Arial, sans-serif" font-size="15">Eco / Urlaub</text>
+  <rect x="478" y="426" width="140" height="42" rx="12" fill="#202b3d"/>
+  <text x="501" y="453" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="15">Express Cool</text>
+  <rect x="630" y="426" width="166" height="42" rx="12" fill="#202b3d"/>
+  <text x="654" y="453" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="15">Schnellgefrieren</text>
+</svg>
