@@ -1,8 +1,11 @@
 # LG ThinQ Refrigerator Card
 
-A standalone Home Assistant dashboard card for LG ThinQ refrigerators.
+A standalone Home Assistant dashboard card for [LG ThinQ](https://www.home-assistant.io/integrations/lg_thinq/) refrigerators.
 
-![Refrigerator card preview](docs/images/card-preview.svg)
+
+<picture>
+  <img src="docs/images/card-preview.png" height="600" alt="Dishwasher card preview" />
+</picture>
 
 ## Features
 
