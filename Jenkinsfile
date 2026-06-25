@@ -16,7 +16,6 @@ pipeline {
           set -euo pipefail
           node --version
           npm --version
-          sonar-scanner --version
         '''
       }
     }
@@ -136,7 +135,11 @@ pipeline {
           withSonarQubeEnv('SonarQube') {
             exitCode = sh(
               returnStatus: true,
-              script: 'sonar-scanner'
+              script: '''
+                npm exec --yes --package=@sonar/scan@4.3.5 -- sonar \
+                  -Dsonar.host.url="${SONAR_HOST_URL}" \
+                  -Dsonar.token="${SONAR_AUTH_TOKEN}"
+              '''
             )
           }
 
