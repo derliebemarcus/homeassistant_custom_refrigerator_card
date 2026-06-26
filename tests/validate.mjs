@@ -33,6 +33,7 @@ for (const expected of [
   'number", "set_value',
   'homeassistant", "toggle',
   'prefers-reduced-motion',
+  'getEntitySuggestion',
 ]) {
   assert.ok(source.includes(expected), `missing required feature: ${expected}`);
 }
