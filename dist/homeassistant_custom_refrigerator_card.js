@@ -435,11 +435,19 @@ if (!customElements.get("refrigerator-card")) {
   customElements.define("refrigerator-card", RefrigeratorCard);
 }
 window.customCards = window.customCards || [];
+const matchesEntity = (entity, terms) => {
+  const entityId = String(entity?.entity_id || entity || "").toLowerCase();
+  const name = String(entity?.attributes?.friendly_name || entity?.name || "").toLowerCase();
+  return terms.some((term) => entityId.includes(term) || name.includes(term));
+};
+
 window.customCards.push({
   type: "refrigerator-card",
   name: "LG ThinQ Refrigerator Card",
   description: "LG ThinQ refrigerator control card",
   preview: true,
+  getEntitySuggestion: (entity) =>
+    matchesEntity(entity, ["refrigerator", "fridge", "freezer", "kuhlschrank", "kühlschrank", "lg_thinq"]),
 });
 console.info(
   `%c REFRIGERATOR-CARD %c ${VERSION} `,
