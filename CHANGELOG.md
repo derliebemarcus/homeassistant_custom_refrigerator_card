@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.3.0](https://github.com/derliebemarcus/homeassistant_custom_refrigerator_card/compare/v0.2.0...v0.3.0) (2026-06-26)
+
+
+### Features
+
+* **ci:** add Jenkins card quality gate ([#7](https://github.com/derliebemarcus/homeassistant_custom_refrigerator_card/issues/7)) ([b4ca299](https://github.com/derliebemarcus/homeassistant_custom_refrigerator_card/commit/b4ca2995fca46990eaaca9797b932d3bdaaff440))
+
 ## [0.2.0](https://github.com/derliebemarcus/homeassistant_custom_refrigerator_card/compare/v0.1.2...v0.2.0) (2026-06-26)
 
 
