@@ -434,20 +434,27 @@ class RefrigeratorCard extends HTMLElement {
 if (!customElements.get("refrigerator-card")) {
   customElements.define("refrigerator-card", RefrigeratorCard);
 }
-window.customCards = window.customCards || [];
+globalThis.customCards = globalThis.customCards || [];
 const matchesEntity = (entity, terms) => {
   const entityId = String(entity?.entity_id || entity || "").toLowerCase();
   const name = String(entity?.attributes?.friendly_name || entity?.name || "").toLowerCase();
   return terms.some((term) => entityId.includes(term) || name.includes(term));
 };
 
-window.customCards.push({
+globalThis.customCards.push({
   type: "refrigerator-card",
   name: "LG ThinQ Refrigerator Card",
   description: "LG ThinQ refrigerator control card",
   preview: true,
-  getEntitySuggestion: (entity) =>
-    matchesEntity(entity, ["refrigerator", "fridge", "freezer", "kuhlschrank", "kühlschrank", "lg_thinq"]),
+  getEntitySuggestion: (hass, entityId) => {
+    if (!matchesEntity(hass.states?.[entityId], ["refrigerator", "fridge", "freezer", "kuhlschrank", "kühlschrank", "lg_thinq"])) return null;
+    return {
+      config: {
+        type: "custom:refrigerator-card",
+        entity: entityId,
+      },
+    };
+  },
 });
 console.info(
   `%c REFRIGERATOR-CARD %c ${VERSION} `,
