@@ -34,6 +34,7 @@ for (const expected of [
   'homeassistant", "toggle',
   'prefers-reduced-motion',
   'getEntitySuggestion',
+  'globalThis.customCards',
 ]) {
   assert.ok(source.includes(expected), `missing required feature: ${expected}`);
 }

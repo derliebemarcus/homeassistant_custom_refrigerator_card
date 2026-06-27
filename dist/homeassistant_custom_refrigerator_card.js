@@ -446,8 +446,15 @@ globalThis.customCards.push({
   name: "LG ThinQ Refrigerator Card",
   description: "LG ThinQ refrigerator control card",
   preview: true,
-  getEntitySuggestion: (entity) =>
-    matchesEntity(entity, ["refrigerator", "fridge", "freezer", "kuhlschrank", "kühlschrank", "lg_thinq"]),
+  getEntitySuggestion: (hass, entityId) => {
+    if (!matchesEntity(hass.states?.[entityId], ["refrigerator", "fridge", "freezer", "kuhlschrank", "kühlschrank", "lg_thinq"])) return null;
+    return {
+      config: {
+        type: "custom:refrigerator-card",
+        entity: entityId,
+      },
+    };
+  },
 });
 console.info(
   `%c REFRIGERATOR-CARD %c ${VERSION} `,
