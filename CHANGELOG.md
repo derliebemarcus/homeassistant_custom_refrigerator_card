@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.4.0](https://github.com/derliebemarcus/homeassistant_custom_refrigerator_card/compare/v0.3.0...v0.4.0) (2026-06-27)
+
+
+### Features
+
+* add Home Assistant card picker suggestions ([#13](https://github.com/derliebemarcus/homeassistant_custom_refrigerator_card/issues/13)) ([f2f867f](https://github.com/derliebemarcus/homeassistant_custom_refrigerator_card/commit/f2f867fca3c7813fa3f583066d0ca51bf088ac1b))
+
 ## [0.3.0](https://github.com/derliebemarcus/homeassistant_custom_refrigerator_card/compare/v0.2.0...v0.3.0) (2026-06-26)
 
 
