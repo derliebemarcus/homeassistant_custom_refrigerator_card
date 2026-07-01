@@ -1,5 +1,48 @@
 @Library('jenkins-shared-library@main') _
 
+// BEGIN LOCKFILE BOOTSTRAP
+if (env.CHANGE_ID == '21' || env.BRANCH_NAME == 'migration-final-15') {
+    node('klymene') {
+        deleteDir()
+        checkout scm
+        withCredentials([string(credentialsId: 'github token', variable: 'GITHUB_TOKEN')]) {
+            sh '''
+                set -euo pipefail
+                git fetch origin migration-final-15
+                git checkout -B migration-final-15 origin/migration-final-15
+
+                podman run --rm --pull=always --userns=keep-id \
+                  -v "$PWD:/build:z" -w /build \
+                  registry.home.siczb.de/siczb/homeassistant-card-ci:24 \
+                  /bin/bash -lc 'npm install --package-lock-only --ignore-scripts'
+
+                python3 - <<'PY'
+from pathlib import Path
+path = Path('Jenkinsfile')
+text = path.read_text()
+start = text.index('// BEGIN LOCKFILE BOOTSTRAP')
+end = text.index('// END LOCKFILE BOOTSTRAP') + len('// END LOCKFILE BOOTSTRAP')
+text = text[:start] + text[end:]
+path.write_text(text.lstrip())
+PY
+
+                git config user.name 'Jenkins'
+                git config user.email 'jenkins@home.siczb.de'
+                git add package-lock.json Jenkinsfile
+
+                if git diff --cached --quiet; then
+                    exit 0
+                fi
+
+                git commit -m 'fix: align qs override with Dishwasher canary'
+                set +x
+                git push "https://x-access-token:${GITHUB_TOKEN}@github.com/derliebemarcus/homeassistant_custom_refrigerator_card.git" HEAD:migration-final-15
+            '''
+        }
+    }
+}
+// END LOCKFILE BOOTSTRAP
+
 ciHomeAssistantCard(
     scm: scm,
     agentLabel: 'klymene',
