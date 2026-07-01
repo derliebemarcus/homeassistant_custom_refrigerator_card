@@ -1,70 +1,40 @@
-@Library('jenkins-shared-library@main') _
+pipeline {
+  agent { label 'klymene' }
 
-ciHomeAssistantCard(
-    scm: scm,
-    agentLabel: 'klymene',
-    mainBranch: 'main',
-    repository: [
-        owner: 'derliebemarcus',
-        name: 'homeassistant_custom_refrigerator_card',
-    ],
-    nodeJsVersion: 24,
-    sourceFile: 'src/homeassistant_custom_refrigerator_card.js',
-    distributionFile: 'dist/homeassistant_custom_refrigerator_card.js',
-    releaseAsset: 'dist/homeassistant_custom_refrigerator_card.js',
-    coverageFile: 'coverage/lcov.info',
-    junitPattern: 'reports/junit/*.xml',
-    coverageFloor: 81,
-    reportRoot: 'reports',
-    mutation: [
-        artifacts: 'reports/mutation/**',
-    ],
-    sonar: [
-        projectKey: 'homeassistant_custom_refrigerator_card',
-        projectName: 'Home Assistant Custom Refrigerator Card',
-        server: 'SonarQube',
-        timeoutMinutes: 15,
-    ],
-    coveralls: [
-        credentialId: 'Coveralls',
-    ],
-    security: [
-        gitleaks: [enabled: true],
-        trivy: [enabled: true],
-        codeql: [
-            enabled: true,
-            toolName: 'codeql',
-            languages: ['javascript-typescript', 'actions'],
-        ],
-        osv: [enabled: true],
-        actionlint: [enabled: true],
-    ],
-    repositoryChecks: [
-        validateScript: 'tests/validate-repository.mjs',
-        lockfileCheck: true,
-    ],
-    github: [
-        credentialId: 'github token',
-        publishStageChecks: true,
-        publishFinalCheck: false,
-        statusContext: 'Continuous Integration / Jenkins',
-        title: 'Refrigerator Card Quality Gates',
-    ],
-    homeAssistant: [
-        enabled: true,
-    ],
-)
+  options {
+    disableConcurrentBuilds()
+    skipDefaultCheckout(true)
+  }
 
-ciChangesetsRelease(
-    scm: scm,
-    agentLabel: 'klymene',
-    mainBranch: 'main',
-    repository: [
-        owner: 'derliebemarcus',
-        name: 'homeassistant_custom_refrigerator_card',
-    ],
-    asset: 'dist/homeassistant_custom_refrigerator_card.js',
-    versionSyncCommand: 'npm run version:sync',
-    credentialId: 'github token',
-    autoMergePatch: true,
-)
+  stages {
+    stage('Clean migration files') {
+      steps {
+        checkout scm
+        withCredentials([
+          usernamePassword(
+            credentialsId: 'github token',
+            usernameVariable: 'GITHUB_RELEASE_USER',
+            passwordVariable: 'GH_TOKEN'
+          )
+        ]) {
+          sh '''#!/usr/bin/env bash
+            set -euo pipefail
+            branch='feat/migrate-shared-card-profile-15'
+            repository='derliebemarcus/homeassistant_custom_refrigerator_card'
+            git fetch origin "refs/heads/${branch}:refs/remotes/origin/${branch}"
+            git checkout -B "$branch" "origin/$branch"
+            rm -f release-please-config.json .release-please-manifest.json
+            git add -A
+            if git diff --cached --quiet; then exit 0; fi
+            git config user.name 'jenkins-release'
+            git config user.email 'jenkins-release@users.noreply.github.com'
+            git commit -m 'remove: old files'
+            gh auth setup-git
+            git remote set-url origin "https://github.com/${repository}.git"
+            git push origin "HEAD:refs/heads/${branch}"
+          '''
+        }
+      }
+    }
+  }
+}
