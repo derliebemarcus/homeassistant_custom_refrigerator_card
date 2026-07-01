@@ -34,7 +34,7 @@ ciChangesetsRelease(
     mainBranch: 'main',
     repository: [owner: 'derliebemarcus', name: 'homeassistant_custom_refrigerator_card'],
     asset: 'dist/homeassistant_custom_refrigerator_card.js',
-    versionSyncCommand: 'sh scripts/sync-version',
+    versionSyncCommand: 'sh scripts/sync-release',
     credentialId: 'github token',
     autoMergePatch: true,
 )
