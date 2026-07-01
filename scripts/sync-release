@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+set -eu
+node scripts/sync-lock.mjs
+node scripts/sync-version.mjs
