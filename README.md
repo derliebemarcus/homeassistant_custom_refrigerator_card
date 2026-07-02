@@ -21,6 +21,8 @@ A standalone Home Assistant dashboard card for [LG ThinQ](https://www.home-assis
 
 ## Compatibility
 
+This card requires **Home Assistant 2026.7.0 or newer**.
+
 This card has been tested with an **LG ThinQ refrigerator** using Home Assistant's official `lg_thinq` integration. It should also work with other LG ThinQ refrigerators that expose the corresponding standard entities. Available controls and status fields depend on the capabilities and enabled entities of the individual appliance.
 
 The following alternative entity suffixes are supported:
@@ -107,10 +109,10 @@ npm run build
 
 ## Release process
 
-1. Update `CHANGELOG.md` and the version in `package.json`.
-2. Run Jenkins and GitHub Actions validation.
-3. Merge the validated version to `main`; the release workflow creates the matching `v<version>` GitHub release and attaches the HACS JavaScript bundle.
-4. Confirm that the HACS validation workflow passes.
+1. Add a `.changeset/*.md` file with an explicit `patch`, `minor` or `major` release level for every release-relevant change.
+2. Merge the change only after Jenkins and the required GitHub-native checks pass.
+3. The next green `main` build creates or updates the Changesets version pull request.
+4. After the version pull request merges, the following green `main` build creates the tag, uploads the JavaScript asset to a draft GitHub Release and publishes the immutable release.
 
 ## Support
 
