@@ -1,4 +1,4 @@
-const VERSION = "0.4.1";
+const VERSION = "0.4.2";
 
 const SUFFIXES = {
   door: ["_door_open", "_door"],
