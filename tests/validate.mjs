@@ -8,9 +8,13 @@ const packageJson = JSON.parse(await readFile("package.json", "utf8"));
 const packageLock = JSON.parse(await readFile("package-lock.json", "utf8"));
 const changesetsConfig = JSON.parse(await readFile(".changeset/config.json", "utf8"));
 
+const supportedHomeAssistant = "2026.7.0";
+
 assert.equal(distribution, source);
 assert.equal(manifest.name, "LG ThinQ Refrigerator Card");
 assert.equal(manifest.filename, "homeassistant_custom_refrigerator_card.js");
+assert.equal(manifest.homeassistant, supportedHomeAssistant);
+assert.match(manifest.homeassistant, /^\d{4}\.\d{1,2}\.0$/);
 assert.equal(packageLock.version, packageJson.version);
 assert.equal(packageLock.packages[""].version, packageJson.version);
 assert.equal(changesetsConfig.baseBranch, "main");
