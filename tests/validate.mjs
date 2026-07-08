@@ -8,6 +8,7 @@ const manifest = JSON.parse(await readFile("hacs.json", "utf8"));
 const packageJson = JSON.parse(await readFile("package.json", "utf8"));
 const packageLock = JSON.parse(await readFile("package-lock.json", "utf8"));
 const changesetsConfig = JSON.parse(await readFile(".changeset/config.json", "utf8"));
+const renovateConfig = JSON.parse(await readFile("renovate.json", "utf8"));
 
 const supportedHomeAssistant = "2026.7.0";
 
@@ -23,6 +24,24 @@ assert.equal(changesetsConfig.baseBranch, "main");
 assert.equal(changesetsConfig.privatePackages.version, true);
 assert.equal(changesetsConfig.privatePackages.tag, false);
 assert.equal(packageJson.engines.node, ">=24");
+
+assert.deepEqual(renovateConfig.extends, ["config:recommended"]);
+assert.equal(renovateConfig.dependencyDashboard, true);
+assert.equal(renovateConfig.platformAutomerge, false);
+
+const renovateRules = new Map(
+  renovateConfig.packageRules.map((rule) => [rule.description, rule]),
+);
+const developmentRule = renovateRules.get("Automerge development dependency maintenance");
+const runtimeRule = renovateRules.get("Automerge releasable runtime dependency updates");
+const majorRule = renovateRules.get("Require manual approval for major updates");
+
+assert.deepEqual(developmentRule?.matchManagers, ["npm"]);
+assert.deepEqual(developmentRule?.matchDepTypes, ["devDependencies"]);
+assert.deepEqual(runtimeRule?.matchManagers, ["npm"]);
+assert.deepEqual(runtimeRule?.matchDepTypes, ["dependencies", "optionalDependencies"]);
+assert.equal(majorRule?.dependencyDashboardApproval, true);
+assert.equal(majorRule?.automerge, false);
 
 const versionPattern = /const VERSION = "([^"\n]+)";/;
 assert.equal(source.match(versionPattern)?.[1], packageJson.version);
