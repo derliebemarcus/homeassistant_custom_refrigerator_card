@@ -127,3 +127,39 @@ test("dispatches more-info events and isolates service-call failures", async () 
   }
   assert.match(String(errors[0]?.[0]), /number\.set_value failed/);
 });
+
+test("customCards getEntitySuggestion", () => {
+  const cardConfig = globalThis.customCards.find((c) => c.type === "refrigerator-card");
+  assert.ok(cardConfig);
+  assert.equal(cardConfig.getEntitySuggestion({}, "sensor.unknown"), null);
+  
+  const hass = {
+    states: {
+      "sensor.fridge": { attributes: { friendly_name: "My Fridge" } },
+      "sensor.oven": { attributes: { friendly_name: "My Oven" } },
+    },
+    entities: {
+      "sensor.fridge": { device_id: "device-123" },
+      "sensor.oven": { device_id: "device-456" },
+      "sensor.no_device": {},
+    }
+  };
+  
+  // Valid fridge with device_id
+  assert.deepEqual(cardConfig.getEntitySuggestion(hass, "sensor.fridge"), {
+    config: {
+      type: "custom:refrigerator-card",
+      device_id: "device-123",
+    }
+  });
+
+  // Not matching terms
+  assert.equal(cardConfig.getEntitySuggestion(hass, "sensor.oven"), null);
+  
+  // Matching term but no device_id
+  const hassNoDevice = {
+    states: { "sensor.fridge": { attributes: { friendly_name: "My Fridge" } } },
+    entities: {}
+  };
+  assert.equal(cardConfig.getEntitySuggestion(hassNoDevice, "sensor.fridge"), null);
+});
