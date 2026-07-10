@@ -448,10 +448,12 @@ globalThis.customCards.push({
   preview: true,
   getEntitySuggestion: (hass, entityId) => {
     if (!matchesEntity(hass.states?.[entityId], ["refrigerator", "fridge", "freezer", "kuhlschrank", "kühlschrank", "lg_thinq"])) return null;
+    const device_id = hass.entities?.[entityId]?.device_id;
+    if (!device_id) return null;
     return {
       config: {
         type: "custom:refrigerator-card",
-        entity: entityId,
+        device_id,
       },
     };
   },
