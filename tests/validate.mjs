@@ -49,5 +49,8 @@ assert.equal(distribution.match(versionPattern)?.[1], packageJson.version);
 
 assert.ok(source.includes('customElements.define("refrigerator-card"'));
 assert.ok(source.includes('globalThis.customCards'));
+assert.ok(source.includes('getEntitySuggestion'));
+assert.ok(source.includes('hass.entities'));
+assert.ok(source.includes('device_id'));
 
 console.log("Refrigerator card validation passed");
