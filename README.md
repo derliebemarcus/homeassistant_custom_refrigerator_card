@@ -32,6 +32,8 @@ The following alternative entity suffixes are supported:
 
 ## Installation
 
+[![Open your Home Assistant instance and open this repository in HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=derliebemarcus&repository=homeassistant_custom_refrigerator_card&category=plugin)
+
 ### HACS
 
 1. Open HACS.
