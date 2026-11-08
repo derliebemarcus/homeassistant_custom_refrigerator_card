@@ -435,10 +435,19 @@ if (!customElements.get("refrigerator-card")) {
   customElements.define("refrigerator-card", RefrigeratorCard);
 }
 globalThis.customCards = globalThis.customCards || [];
-const matchesEntity = (entity, terms) => {
-  const entityId = String(entity?.entity_id || entity || "").toLowerCase();
-  const name = String(entity?.attributes?.friendly_name || entity?.name || "").toLowerCase();
-  return terms.some((term) => entityId.includes(term) || name.includes(term));
+const matchesEntity = (hass, entityId, terms) => {
+  const entity = hass.states?.[entityId];
+  const registryEntry = hass.entities?.[entityId];
+  const device = hass.devices?.[registryEntry?.device_id];
+  const identifiers = [
+    entityId,
+    registryEntry?.name,
+    registryEntry?.original_name,
+    device?.name_by_user,
+    device?.name,
+  ].filter(Boolean).map((value) => String(value).toLowerCase());
+  return terms.some((term) => identifiers.some((name) => name.includes(term))) &&
+    Boolean(entity && registryEntry?.device_id);
 };
 
 globalThis.customCards.push({
@@ -447,7 +456,7 @@ globalThis.customCards.push({
   description: "LG ThinQ refrigerator control card",
   preview: true,
   getEntitySuggestion: (hass, entityId) => {
-    if (!matchesEntity(hass.states?.[entityId], ["refrigerator", "fridge", "freezer", "kuhlschrank", "kühlschrank", "lg_thinq"])) return null;
+    if (!matchesEntity(hass, entityId, ["refrigerator", "fridge", "freezer", "kuhlschrank", "kühlschrank", "lg_thinq"])) return null;
     const device_id = hass.entities?.[entityId]?.device_id;
     if (!device_id) return null;
     return {
