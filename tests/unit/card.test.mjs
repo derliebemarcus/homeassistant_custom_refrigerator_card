@@ -223,3 +223,18 @@ test("renders loading, missing and populated card states", () => {
   assert.match(card.shadowRoot.innerHTML, /Kühlteil/);
   assert.match(card.shadowRoot.innerHTML, /Gefrierteil/);
 });
+
+test("card suggestions work without deprecated friendly_name", () => {
+  const entityId = "sensor.appliance_status";
+  const suggestion = globalThis.customCards.find((card) => card.type === "refrigerator-card");
+  const hass = {
+    states: { [entityId]: { entity_id: entityId, state: "on", attributes: {} } },
+    entities: { [entityId]: { device_id: "device-1", original_name: "Status" } },
+    devices: { "device-1": { name: "fridge" } },
+  };
+  assert.deepEqual(suggestion.getEntitySuggestion(hass, entityId), {
+    config: { type: "custom:refrigerator-card", device_id: "device-1" },
+  });
+  assert.equal(suggestion.getEntitySuggestion({ states: {}, entities: {} }, entityId), null);
+  assert.equal(suggestion.getEntitySuggestion({ ...hass, entities: {} }, entityId), null);
+});
